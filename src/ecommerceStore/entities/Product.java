@@ -1,5 +1,5 @@
 package ecommerceStore.entities;
 
-public interface User {
+public interface Product {
 
 }
