@@ -1,9 +1,9 @@
 package ecommerceStore.configurations;
 
-import ecommerceStore.entities.Cart;
 import ecommerceStore.entities.User;
 import ecommerceStore.entities.implementations.DefaultCart;
 import ecommerceStore.menu.Menu;
+import ecommerceStore.entities.Cart;
 
 public class ApplicationContext {
 	
@@ -13,13 +13,11 @@ public class ApplicationContext {
 	private Menu mainMenu;
 	private Cart sessionCart;
 	
-	private ApplicationContext() {
-		
-	}
-	
+	private ApplicationContext() {}
+
 	
 	public void setLoggedInUser(User user) {
-		if (this.sessionCart != null) {
+		if(this.sessionCart != null) {
 			this.sessionCart.clear();
 		}
 		this.loggedInUser = user;
@@ -41,7 +39,7 @@ public class ApplicationContext {
 		if (instance == null) {
 			instance = new ApplicationContext();
 		}
-		return instance;
+		return instance; 
 	}
 	
 	public Cart getSessionCart() {
@@ -50,6 +48,5 @@ public class ApplicationContext {
 		}
 		return this.sessionCart;
 	}
-	
 
 }
