@@ -1,6 +1,8 @@
 package ecommerceStore.entities.implementations;
 
-public class DefaultUser {
+import ecommerceStore.entities.User;
+
+public class DefaultUser implements  User {
 	
 	public static int userCounter = 0;
 	
