@@ -10,6 +10,7 @@ public class DefaultUserManagementService implements UserManagementService {
 	private static final String NOT_UNIQUE_EMAIL_ERROR_MESSAGE = "This email is already used by another user. Please, use another email";
 	private static final String EMPTY_EMAIL_ERROR_MESSAGE = "You have to input email to register. Please, try one more time";
 	private static final String NO_ERROR_MESSAGE = "";
+	private static final String NO_USER_VALUE = "You failed to enter a value";
 	
 	private static final int DEFAULT_USERS_CAPACITY = 10;
 	
@@ -20,6 +21,7 @@ public class DefaultUserManagementService implements UserManagementService {
 	
 	{
 		users = new User[DEFAULT_USERS_CAPACITY];
+		lastUserIndex = users.length-1;
 	}
 	
 	private DefaultUserManagementService() {}
@@ -27,12 +29,12 @@ public class DefaultUserManagementService implements UserManagementService {
 	
 	@Override
 	public String registerUser(User user) {
-		if (user == null) {
-			return NO_ERROR_MESSAGE;
+		if(user == null) {
+			return NO_USER_VALUE;
 		}
 		
 		String errorMessage = checkUniqueEmail(user.getEmail());
-		if (errorMessage != null && errorMessage.isEmpty()) {
+		if (errorMessage != null && !errorMessage.isEmpty()) {
 			return errorMessage;
 		}
 		
@@ -84,6 +86,10 @@ public class DefaultUserManagementService implements UserManagementService {
 				nonNullUsers[index++] = user;
 			}
 		}
+		for(User user : nonNullUsers) {
+			System.out.println(user.getFirstName() + " " + user.getLastName());
+		}
+		
 		return nonNullUsers;
 	}
 

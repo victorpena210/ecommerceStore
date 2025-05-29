@@ -1,6 +1,5 @@
 package ecommerceStore.services;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 import ecommerceStore.configurations.ApplicationContext;

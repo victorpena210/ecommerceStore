@@ -1,18 +1,26 @@
 package ecommerceStore.menu.implementations;
 
+import ecommerceStore.configurations.ApplicationContext;
 import ecommerceStore.menu.Menu;
 
 public class SignOutMenu implements Menu {
+	
+	private ApplicationContext context;
+	
+	{
+		context = ApplicationContext.getInstance();
+	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
+		printMenuHeader();
+		context.setLoggedInUser(null);
 	}
 
 	@Override
 	public void printMenuHeader() {
-		// TODO Auto-generated method stub
+		System.out.println("**** Sign Out ****");
+		System.out.println("goodbye");
 
 	}
 
