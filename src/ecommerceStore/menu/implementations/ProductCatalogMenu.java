@@ -3,6 +3,7 @@ package ecommerceStore.menu.implementations;
 import java.util.Scanner;
 
 import ecommerceStore.configurations.ApplicationContext;
+import ecommerceStore.entities.Cart;
 import ecommerceStore.entities.Product;
 import ecommerceStore.menu.Menu;
 import ecommerceStore.services.ProductManagementService;
@@ -25,7 +26,47 @@ public class ProductCatalogMenu implements Menu {
 		while (true) {
 			printMenuHeader();
 			printProductsToConsole();
+			
+			String userInput = readUserInput();
+			
+			if (context.getLoggedInUser() == null) {
+				menuToNavigate = new MainMenu();
+				System.out.println("You are not logged in. Please, sign in or create a new account");
+				break;
+			}
+			
+			if(userInput.equalsIgnoreCase(MainMenu.MENU_COMMAND)) {
+				menuToNavigate = new MainMenu();
+				break;
+			}
+			
+			if(userInput.equalsIgnoreCase(CHECKOUT_COMMAND)) {
+				Cart sessionCart = context.getSessionCart();
+				if(sessionCart == null || sessionCart.isEmpty()) {
+					System.out.println("Your cart is empty. Please, add product to your cart and then proceed to checkout.");
+				} else {
+					menuToNavigate = new CheckoutMenu();
+					break;
+				}
+				
+			} else {
+				Product productToAddToCart = fetchProduct(userInput);
+			}
 		}
+	}
+
+	private Product fetchProduct(String userInput) {
+		int productIdToAddToCart = Integer.parseInt(userInput);
+		Product productToAddToCart = productManagementService.getProductById(productIdToAddToCart);
+		return productToAddToCart;
+	}
+	
+	private void processAddToCart(Product productToAddToCart) {
+		context.getSessionCart().addProduct(productToAddToCart);
+		System.out.printf("Product %s has been added to your cart. "
+							+ "If you want to add a new product - enter the product id."
+							+ "If you want to proceed with checkout - enter word CHECKOUT"
+							+ "console %n", productToAddToCart.getProductName());
 	}
 
 	private void printProductsToConsole() {
